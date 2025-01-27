@@ -1,4 +1,4 @@
-# BitViz - Interactive Bit Manipulation Tool
+# Interactive Bit Manipulation Tool
 
 ![Rust](https://img.shields.io/badge/Rust-1.72%2B-orange?logo=rust)
 ![Leptos](https://img.shields.io/badge/Leptos-0.5%2B-blue)
@@ -63,7 +63,6 @@ cargo tauri dev
 - Rust 1.72+
 - Node.js 18+
 - Tauri 1.4+
-- Usage
 
 ## Bit Grid
 
