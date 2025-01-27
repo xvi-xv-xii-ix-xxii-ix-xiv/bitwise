@@ -1,0 +1,9 @@
+[build]
+dist = "../frontend/dist"
+public_url = "/"
+target = "index.html"
+
+[[hooks]]
+stage = "build"
+command = "cargo"
+command_arguments = ["build", "--target=wasm32-unknown-unknown", "--release"]

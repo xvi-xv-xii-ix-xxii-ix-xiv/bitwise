@@ -1,0 +1,11 @@
+[package]
+name = "bit_operations"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+wasm = []
+
+# libs/bit_operations/Cargo.toml
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }

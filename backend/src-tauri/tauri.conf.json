@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0.0-rc",
+  "productName": "Bitwise",
+  "version": "0.9.0-rc.1",
+  "identifier": "com.bitwise.release",
+  "author": "xvi.xv.xii.ix.xxii.ix.xiv <xvi.xv.xii.ix.xxii.ix.xiv@gmail.com>",
+  "license": "Apache 2.0",
+  "description": "A tool for managing bitwise operations.",
+  "keywords": ["bitwise", "tool", "rust", "bit", "calculator"],
+  "build": {
+    "frontendDist": "../../frontend/dist",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": "cd ../frontend && trunk serve --watch . --port 3000",
+    "beforeBuildCommand": "cd ../frontend && trunk build --release --dist ../frontend/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Bitwise Tool",
+        "width": 450,
+        "height": 600,
+        "minWidth": 350,
+        "minHeight": 400,
+        "resizable": false
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "macOS": {
+      "bundleIdentifier": "com.bitwise.tool",
+      "minimumSystemVersion": "10.15.0"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis", "deb", "appimage", "dmg"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

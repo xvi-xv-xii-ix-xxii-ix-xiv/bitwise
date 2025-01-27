@@ -1,0 +1,190 @@
+/* Set the background color and size for the HTML and body elements */
+html, body {
+    background: #314455; /* Dark blue-gray background */
+    height: 100%; /* Full height */
+    margin: 0px; /* Remove margin */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Main container for the application */
+.main-container {
+    width: 450px; /* Fixed width */
+    height: 600px; /* Fixed height */
+    margin-top: 0; /* No top margin */
+    padding: 10px; /* Inner spacing */
+    display: flex; /* Enable flex layout */
+    flex-direction: column; /* Arrange children vertically */
+    box-sizing: border-box; /* Include padding and border in size */
+}
+
+/* Grid container for displaying bits */
+.bit-grid {
+    display: grid; /* Enable grid layout */
+    grid-template-columns: repeat(16, 1fr); /* 16 equal columns */
+    gap: 1px; /* Spacing between items */
+    row-gap: 20px; /* Vertical spacing between rows */
+    padding: 25px 15px; /* Inner spacing */
+    overflow: auto; /* Scrollable if content overflows */
+    flex: 1; /* Allow it to grow and fill space */
+    min-height: 160px; /* Minimum height */
+}
+
+/* Wrapper for bits display and buttons */
+.content-wrapper {
+    display: flex; /* Enable flex layout */
+    flex-direction: column; /* Arrange children vertically */
+    gap: 25px; /* Spacing between elements */
+    height: calc(100% - 120px); /* Adjust height relative to other content */
+    overflow: auto; /* Scrollable if content overflows */
+}
+
+/* Styling for the bits display area */
+.bits-display {
+    background: #314455; /* Same dark blue-gray background */
+    color: #9E5A63; /* Soft red text */
+    padding: 15px; /* Inner spacing */
+    border-radius: 4px; /* Rounded corners */
+    flex-shrink: 0; /* Prevent shrinking */
+    font-family: monospace; /* Monospaced font */
+    white-space: pre-wrap; /* Preserve whitespace */
+    text-align: left; /* Left-align text */
+    font-size: 12px; /* Small font size */
+}
+
+/* Styling for the bit operation buttons */
+.bit-operations {
+    display: grid; /* Enable grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Responsive columns */
+    gap: 10px; /* Spacing between buttons */
+    padding: 15px; /* Inner spacing */
+    background: #314455; /* Background color */
+    position: sticky; /* Stick to the bottom of the container */
+    bottom: 0; /* Align at the bottom */
+}
+
+/* Styles for the buttons */
+.bit-btn {
+    padding: 8px; /* Inner spacing */
+    background: #644E5B; /* Soft brown background */
+    border: 1px solid #9E5A63; /* Red border */
+    color: #C96567; /* Light red text */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 3px; /* Rounded corners */
+    transition: all 0.3s; /* Smooth transitions */
+    font-family: monospace; /* Monospaced font */
+    text-align: center; /* Center-align text */
+    width: auto; /* Adjust width automatically */
+    min-width: 60px; /* Minimum width */
+}
+
+/* Hover effect for buttons */
+.bit-btn:hover {
+    background: #9E5A63; /* Change background to red */
+    color: #314455; /* Change text to blue-gray */
+}
+
+/* Styling for individual bits */
+.bit {
+    position: relative; /* Allow positioning of child elements */
+    width: 20px; /* Fixed width */
+    height: 20px; /* Fixed height */
+    margin: 2px; /* Outer spacing */
+    border: 1px solid #644E5B; /* Brown border */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Enable flex layout */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    font-size: 10px; /* Small font size */
+    color: #9E5A63; /* Red text color */
+    background: #314455; /* Blue-gray background */
+}
+
+/* Active bit styling */
+.bit.active {
+    background: #9E5A63; /* Red background */
+    color: #314455; /* Blue-gray text */
+}
+
+/* Add bit index below the bit */
+.bit::after {
+    content: attr(data-bit); /* Display the bit index */
+    position: absolute; /* Position relative to the bit */
+    bottom: -15px; /* Below the bit */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for true centering */
+    font-size: 8px; /* Smaller font size */
+    color: #C96567; /* Light red */
+}
+
+/* Tooltip for bit on hover */
+.bit:hover::before {
+    content: "Bit " attr(data-bit); /* Show bit index */
+    position: absolute; /* Position relative to the bit */
+    top: -20px; /* Above the bit */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for true centering */
+    background: #644E5B; /* Brown background */
+    color: #314455; /* Blue-gray text */
+    padding: 2px 5px; /* Inner spacing */
+    border-radius: 3px; /* Rounded corners */
+    font-size: 8px; /* Smaller font size */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Adjust margin for every 8th bit */
+.bit:nth-child(8n) {
+    margin-right: 10px; /* Extra spacing */
+}
+
+/* Styling for input fields in number representation */
+.number-repr label {
+    display: block; /* Block-level element */
+    margin: 8px 0; /* Vertical spacing */
+}
+
+.number-repr input {
+    width: 100%; /* Full width */
+    padding: 8px; /* Inner spacing */
+    background: #644E5B; /* Brown background */
+    border: 1px solid #9E5A63; /* Red border */
+    border-radius: 4px; /* Rounded corners */
+    color: #C96567; /* Light red text */
+    font-family: monospace; /* Monospaced font */
+    box-sizing: border-box; /* Include padding and border in size */
+}
+
+/* Placeholder text styling */
+.number-repr input::placeholder {
+    color: #9E5A63; /* Red placeholder */
+    opacity: 0.7; /* Slight transparency */
+}
+
+/* Focus styling for input fields */
+.number-repr input:focus {
+    outline: none; /* Remove outline */
+    border-color: #C96567; /* Highlight border */
+    box-shadow: 0 0 3px #C96567; /* Add glow effect */
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 480px) {
+    .main-container {
+        width: 100vw; /* Full viewport width */
+        height: 100vh; /* Full viewport height */
+        padding: 5px; /* Reduced padding */
+    }
+
+    .bit-grid {
+        grid-template-columns: repeat(16, 1fr); /* Maintain 16 columns */
+    }
+
+    .bit {
+        width: 18px; /* Smaller bits */
+        height: 18px; /* Smaller bits */
+    }
+
+    .number-repr input {
+        font-size: 14px; /* Smaller font size */
+        padding: 6px; /* Reduced padding */
+    }
+}

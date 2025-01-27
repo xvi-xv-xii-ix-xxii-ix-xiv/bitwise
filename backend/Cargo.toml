@@ -1,0 +1,9 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tauri = { version = "2.2.5" }
+serde = { version = "1.0.217", features = ["derive"] }
+bit_operations = { path = "../libs/bit_operations" }
