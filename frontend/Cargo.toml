@@ -8,3 +8,4 @@ leptos = { version = "0.7.4", features = ["csr"] }
 bit_operations = { path = "../libs/bit_operations", features = ["wasm"] }
 serde = { version = "1.0.217", features = ["derive"] }
 web-sys = "0.3.77"
+hex = "0.4.3"

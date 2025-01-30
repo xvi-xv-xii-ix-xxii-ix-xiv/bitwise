@@ -1,4 +1,10 @@
-/* Set the background color and size for the HTML and body elements */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap'); /* Set the background color and size for the HTML and body elements */
+.utf8-display {
+    unicode-bidi: plaintext;
+    direction: ltr;
+    font-family: 'Noto Sans', monospace;
+}
+
 html, body {
     background: #314455; /* Dark blue-gray background */
     height: 100%; /* Full height */
@@ -149,7 +155,8 @@ html, body {
     border: 1px solid #9E5A63; /* Red border */
     border-radius: 4px; /* Rounded corners */
     color: #C96567; /* Light red text */
-    font-family: monospace; /* Monospaced font */
+    font-family: monospace, 'Noto Sans'; /* Monospaced font */
+    unicode-bidi: embed;
     box-sizing: border-box; /* Include padding and border in size */
 }
 
@@ -165,6 +172,86 @@ html, body {
     border-color: #C96567; /* Highlight border */
     box-shadow: 0 0 3px #C96567; /* Add glow effect */
 }
+
+/* Добавьте в CSS */
+.bit.inactive {
+    background: #314455;
+    color: #644E5B;
+    border-color: #644E5B;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.bit.inactive::after {
+    color: #644E5B;
+}
+
+.bit.inactive:hover::before {
+    display: none;
+}
+
+/* Custom styles for radio buttons */
+.bit-size-selector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    background: #314455;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.bit-size-label {
+    color: #C96567;
+    font-family: monospace;
+    margin-right: 10px;
+}
+
+.bit-size-selector label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #C96567;
+    font-family: monospace;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+
+.bit-size-selector input[type="radio"] {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #9E5A63;
+    border-radius: 50%;
+    background: #314455;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.bit-size-selector input[type="radio"]:checked {
+    background: #9E5A63;
+}
+
+.bit-size-selector input[type="radio"]::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background: #C96567;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.bit-size-selector input[type="radio"]:checked::before {
+    opacity: 1;
+}
+
 
 /* Responsive styles for small screens */
 @media (max-width: 480px) {
