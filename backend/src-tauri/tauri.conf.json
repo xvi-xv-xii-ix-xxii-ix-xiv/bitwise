@@ -3,10 +3,6 @@
   "productName": "Bitwise",
   "version": "0.9.0-rc.1",
   "identifier": "com.bitwise.release",
-  "author": "xvi.xv.xii.ix.xxii.ix.xiv <xvi.xv.xii.ix.xxii.ix.xiv@gmail.com>",
-  "license": "Apache 2.0",
-  "description": "A tool for managing bitwise operations.",
-  "keywords": ["bitwise", "tool", "rust", "bit", "calculator"],
   "build": {
     "frontendDist": "../../frontend/dist",
     "devUrl": "http://localhost:3000",
@@ -18,7 +14,7 @@
       {
         "title": "Bitwise Tool",
         "width": 450,
-        "height": 600,
+        "height": 850,
         "minWidth": 350,
         "minHeight": 400,
         "resizable": false
@@ -26,10 +22,6 @@
     ],
     "security": {
       "csp": null
-    },
-    "macOS": {
-      "bundleIdentifier": "com.bitwise.tool",
-      "minimumSystemVersion": "10.15.0"
     }
   },
   "bundle": {
