@@ -7,8 +7,7 @@
 
 A cross-platform desktop application for visualizing and manipulating 64-bit values, built with Rust + Tauri + Leptos.
 
-<img src="img.png" alt="Описание" width="450" height="850" />
-
+<img src="img.png" alt="Описание" width="700" height="820" />
 ## Features
 
 - **64-bit Visualization Grid**

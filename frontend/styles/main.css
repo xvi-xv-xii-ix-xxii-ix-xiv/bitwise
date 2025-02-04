@@ -1,4 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap'); /* Set the background color and size for the HTML and body elements */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+/* Color variables */
+:root {
+    --bg-color: #314455;
+    --accent-color: #9E5A63;
+    --border-color: #644E5B;
+    --text-color: #C96567;
+    --hover-bg: #9E5A63;
+    --hover-text: #314455;
+}
+
 .utf8-display {
     unicode-bidi: plaintext;
     direction: ltr;
@@ -6,204 +17,178 @@
 }
 
 html, body {
-    background: #314455; /* Dark blue-gray background */
-    height: 100%; /* Full height */
-    margin: 0px; /* Remove margin */
-    overflow: hidden; /* Prevent scrolling */
+    background: var(--bg-color);
+    height: 100%;
+    overflow: hidden;
 }
 
-/* Main container for the application */
 .main-container {
-    width: 450px; /* Fixed width */
-    height: 600px; /* Fixed height */
-    margin-top: 0; /* No top margin */
-    padding: 10px; /* Inner spacing */
-    display: flex; /* Enable flex layout */
-    flex-direction: column; /* Arrange children vertically */
-    box-sizing: border-box; /* Include padding and border in size */
+    width: 100%;
+    height: 100%;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
-/* Grid container for displaying bits */
 .bit-grid {
-    display: grid; /* Enable grid layout */
-    grid-template-columns: repeat(16, 1fr); /* 16 equal columns */
-    gap: 1px; /* Spacing between items */
-    row-gap: 20px; /* Vertical spacing between rows */
-    padding: 25px 15px; /* Inner spacing */
-    overflow: auto; /* Scrollable if content overflows */
-    flex: 1; /* Allow it to grow and fill space */
-    min-height: 160px; /* Minimum height */
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 1px;
+    row-gap: 15px;
+    overflow: visible;
+    flex: 1;
+    min-height: 80px;
 }
 
-/* Wrapper for bits display and buttons */
 .content-wrapper {
-    display: flex; /* Enable flex layout */
-    flex-direction: column; /* Arrange children vertically */
-    gap: 25px; /* Spacing between elements */
-    height: calc(100% - 120px); /* Adjust height relative to other content */
-    overflow: auto; /* Scrollable if content overflows */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: calc(100% - 120px);
+    overflow: auto;
 }
 
-/* Styling for the bits display area */
 .bits-display {
-    background: #314455; /* Same dark blue-gray background */
-    color: #9E5A63; /* Soft red text */
-    padding: 15px; /* Inner spacing */
-    border-radius: 4px; /* Rounded corners */
-    flex-shrink: 0; /* Prevent shrinking */
-    font-family: monospace; /* Monospaced font */
-    white-space: pre-wrap; /* Preserve whitespace */
-    text-align: left; /* Left-align text */
-    font-size: 12px; /* Small font size */
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    flex-shrink: 0;
+    font-family: monospace;
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 12px;
 }
 
-/* Styling for the bit operation buttons */
 .bit-operations {
-    display: grid; /* Enable grid layout */
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Responsive columns */
-    gap: 10px; /* Spacing between buttons */
-    padding: 15px; /* Inner spacing */
-    background: #314455; /* Background color */
-    position: sticky; /* Stick to the bottom of the container */
-    bottom: 0; /* Align at the bottom */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    background: var(--bg-color);
+    position: sticky;
+    bottom: 0;
 }
 
-/* Styles for the buttons */
 .bit-btn {
-    padding: 8px; /* Inner spacing */
-    background: #644E5B; /* Soft brown background */
-    border: 1px solid #9E5A63; /* Red border */
-    color: #C96567; /* Light red text */
-    cursor: pointer; /* Pointer cursor on hover */
-    border-radius: 3px; /* Rounded corners */
-    transition: all 0.3s; /* Smooth transitions */
-    font-family: monospace; /* Monospaced font */
-    text-align: center; /* Center-align text */
-    width: auto; /* Adjust width automatically */
-    min-width: 60px; /* Minimum width */
+    padding: 8px;
+    background: var(--border-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.3s;
+    font-family: monospace;
+    text-align: center;
+    width: auto;
+    min-width: 60px;
 }
 
-/* Hover effect for buttons */
 .bit-btn:hover {
-    background: #9E5A63; /* Change background to red */
-    color: #314455; /* Change text to blue-gray */
+    background: var(--hover-bg);
+    color: var(--hover-text);
 }
 
-/* Styling for individual bits */
 .bit {
-    position: relative; /* Allow positioning of child elements */
-    width: 20px; /* Fixed width */
-    height: 20px; /* Fixed height */
-    margin: 2px; /* Outer spacing */
-    border: 1px solid #644E5B; /* Brown border */
-    cursor: pointer; /* Pointer cursor on hover */
-    display: flex; /* Enable flex layout */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    font-size: 10px; /* Small font size */
-    color: #9E5A63; /* Red text color */
-    background: #314455; /* Blue-gray background */
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--accent-color);
+    background: var(--bg-color);
 }
 
-/* Active bit styling */
 .bit.active {
-    background: #9E5A63; /* Red background */
-    color: #314455; /* Blue-gray text */
+    background: var(--accent-color);
+    color: var(--bg-color);
 }
 
-/* Add bit index below the bit */
 .bit::after {
-    content: attr(data-bit); /* Display the bit index */
-    position: absolute; /* Position relative to the bit */
-    bottom: -15px; /* Below the bit */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for true centering */
-    font-size: 8px; /* Smaller font size */
-    color: #C96567; /* Light red */
+    content: attr(data-bit);
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: var(--text-color);
 }
 
-/* Tooltip for bit on hover */
 .bit:hover::before {
-    content: "Bit " attr(data-bit); /* Show bit index */
-    position: absolute; /* Position relative to the bit */
-    top: -20px; /* Above the bit */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for true centering */
-    background: #644E5B; /* Brown background */
-    color: #314455; /* Blue-gray text */
-    padding: 2px 5px; /* Inner spacing */
-    border-radius: 3px; /* Rounded corners */
-    font-size: 8px; /* Smaller font size */
-    white-space: nowrap; /* Prevent text wrapping */
+    content: "Bit " attr(data-bit);
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--border-color);
+    color: var(--bg-color);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 8px;
+    white-space: nowrap;
 }
 
-/* Adjust margin for every 8th bit */
 .bit:nth-child(8n) {
-    margin-right: 10px; /* Extra spacing */
+    margin-right: 30px;
 }
 
-/* Styling for input fields in number representation */
 .number-repr label {
-    display: block; /* Block-level element */
-    margin: 8px 0; /* Vertical spacing */
+    display: block;
+    margin: 10px 0;
 }
 
 .number-repr input {
-    width: 100%; /* Full width */
-    padding: 8px; /* Inner spacing */
-    background: #644E5B; /* Brown background */
-    border: 1px solid #9E5A63; /* Red border */
-    border-radius: 4px; /* Rounded corners */
-    color: #C96567; /* Light red text */
-    font-family: monospace, 'Noto Sans'; /* Monospaced font */
+    width: 100%;
+    padding: 8px;
+    background: var(--border-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-family: monospace, 'Noto Sans';
     unicode-bidi: embed;
-    box-sizing: border-box; /* Include padding and border in size */
+    box-sizing: border-box;
 }
 
-/* Placeholder text styling */
 .number-repr input::placeholder {
-    color: #9E5A63; /* Red placeholder */
-    opacity: 0.7; /* Slight transparency */
+    color: var(--accent-color);
+    opacity: 0.7;
 }
 
-/* Focus styling for input fields */
 .number-repr input:focus {
-    outline: none; /* Remove outline */
-    border-color: #C96567; /* Highlight border */
-    box-shadow: 0 0 3px #C96567; /* Add glow effect */
+    outline: none;
+    border-color: var(--text-color);
+    box-shadow: 0 0 3px var(--text-color);
 }
 
-/* Добавьте в CSS */
 .bit.inactive {
-    background: #314455;
-    color: #644E5B;
-    border-color: #644E5B;
+    background: var(--bg-color);
+    color: var(--border-color);
+    border-color: var(--border-color);
     cursor: not-allowed;
     opacity: 0.6;
 }
 
 .bit.inactive::after {
-    color: #644E5B;
+    color: var(--border-color);
 }
 
-.bit.inactive:hover::before {
-    display: none;
-}
-
-/* Custom styles for radio buttons */
 .bit-size-selector {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 15px;
-    padding: 10px 15px;
-    background: #314455;
+
+    background: var(--bg-color);
     border-radius: 4px;
     margin: 10px 0;
 }
 
 .bit-size-label {
-    color: #C96567;
+    color: var(--text-color);
     font-family: monospace;
     margin-right: 10px;
 }
@@ -212,20 +197,19 @@ html, body {
     display: flex;
     align-items: center;
     gap: 5px;
-    color: #C96567;
+    color: var(--text-color);
     font-family: monospace;
     cursor: pointer;
     white-space: nowrap;
 }
 
-
 .bit-size-selector input[type="radio"] {
     appearance: none;
     width: 12px;
     height: 12px;
-    border: 2px solid #9E5A63;
+    border: 2px solid var(--accent-color);
     border-radius: 50%;
-    background: #314455;
+    background: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -235,43 +219,189 @@ html, body {
 }
 
 .bit-size-selector input[type="radio"]:checked {
-    background: #9E5A63;
+    background: var(--text-color);
 }
 
 .bit-size-selector input[type="radio"]::before {
     content: "";
     width: 4px;
     height: 4px;
-    background: #C96567;
+    background: var(--text-color);
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.bit-size-selector input[type="radio"]:checked::before {
-    opacity: 1;
+.ieee-section,
+.distribution-plot,
+.bit-operations,
+.special-generator {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+/* Для специальных кнопок в секции */
+.special-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px; /* Добавляем фиксированный отступ */
+
+}
+
+.ieee-fields div {
+    margin: 5px 0;
+    font-family: monospace;
+    color: var(--text-color);
+    font-size: 11px;
+}
+
+/* Добавляем контейнер для двух секций */
+
+.number-repr,
+.ieee-section {
+    flex: 1;
+    min-width: 460px; /* Минимальная ширина для читаемости */
 }
 
 
-/* Responsive styles for small screens */
+.number-repr input {
+    flex-grow: 1;
+    min-width: 460px;
+    padding: 6px;
+    flex-basis: 180px; /* Добавлено */
+}
+
+.input-label {
+    display: inline-block;
+    min-width: 70px;
+    text-align: left;
+    margin-right: 1px;
+    font-family: monospace;
+    color: var(--text-color);
+}
+
+.number-repr input {
+    width: 80px; /* Фиксированная ширина полей ввода */
+    flex-grow: 0; /* Отключаем растяжение */
+}
+
+
+.bit-operations,
+.special-generator {
+    flex: 1;
+    margin: 5px;
+}
+
+/* Новый контейнер для строки */
+.decoder-generator-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 100vw
+}
+
+.input-operations-container {
+    flex: 1px;
+    width: 100%;
+    max-width: 100vw;
+    margin-top: 10px;
+}
+
+.distribution-plot {
+    position: relative;
+    margin: 0px 0;
+}
+
+.plot-axis {
+    position: relative;
+    height: 5px;
+    background: linear-gradient(
+            to right,
+            var(--bg-color) 0%,
+            var(--text-color) 30%,
+            #9E7A7D 40%,
+            #9E7A7D 60%,
+            var(--text-color) 70%,
+            var(--bg-color) 100%
+    );
+    border-radius: 5px;
+    flex-grow: 1;  /* Заставляет занимать все доступное пространство */
+    min-width: 670px; /* Чтобы не схлопывался до нуля */
+    max-width: 100vw; /* Не выходит за границы окна */
+}
+
+.zone {
+    position: absolute;
+    height: 100%;
+    opacity: 0.1;
+}
+
+.plot-marker {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--text-color);
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.plot-tooltip {
+    /* Стили для тултипа */
+}
+
+.plot-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    color: var(--accent-color);
+}
+
+.plot-labels span {
+    font-size: 0.8em;
+    position: absolute;
+    transform: translateX(-50%);
+}
+
+.label-left { left: 2%; }
+.label-subnormal { left: 15%; }
+.label-normal { left: 30%; }
+.label-zero { left: 50%; }
+.label-normal { left: 70%; }
+.label-subnormal { left: 85%; }
+.label-right { left: 98%; }
+
 @media (max-width: 480px) {
     .main-container {
-        width: 100vw; /* Full viewport width */
-        height: 100vh; /* Full viewport height */
-        padding: 5px; /* Reduced padding */
+        width: 100vw;
+        height: 100vh;
+        padding: 5px;
     }
 
     .bit-grid {
-        grid-template-columns: repeat(16, 1fr); /* Maintain 16 columns */
+        grid-template-columns: repeat(16, 1fr);
     }
 
     .bit {
-        width: 18px; /* Smaller bits */
-        height: 18px; /* Smaller bits */
+        width: 18px;
+        height: 18px;
     }
 
     .number-repr input {
-        font-size: 14px; /* Smaller font size */
-        padding: 6px; /* Reduced padding */
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .bit-operations,
+    .special-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: 8px; /* Уменьшаем отступ для мобилок */
+    }
+
+    .bit-btn {
+        padding: 6px; /* Уменьшаем внутренние отступы */
+        min-width: 50px; /* Минимальная ширина кнопок */
     }
 }

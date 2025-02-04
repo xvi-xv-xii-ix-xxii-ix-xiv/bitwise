@@ -56,7 +56,12 @@ fn process_bits(bits: u64) -> u64 {
 /// The main function initializes and runs the Tauri application.
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![toggle_bit, get_bits, get_raw, process_bits])
+        .invoke_handler(tauri::generate_handler![
+            toggle_bit,
+            get_bits,
+            get_raw,
+            process_bits
+        ])
         .run(tauri::generate_context!())
         .expect("error running tauri application");
 }

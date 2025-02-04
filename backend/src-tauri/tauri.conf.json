@@ -13,11 +13,11 @@
     "windows": [
       {
         "title": "Bitwise Tool",
-        "width": 450,
-        "height": 850,
+        "width": 700,
+        "height": 820,
         "minWidth": 350,
         "minHeight": 400,
-        "resizable": false
+        "resizable": true
       }
     ],
     "security": {
