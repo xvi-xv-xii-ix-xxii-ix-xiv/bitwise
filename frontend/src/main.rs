@@ -10,7 +10,6 @@ mod plot;
 mod special_values;
 // mod number_repr_bitops;
 
-use std::cmp::PartialEq;
 use crate::plot::DistributionPlot;
 use bit_grid::BitGrid;
 use bit_operations::BitArray;
@@ -19,6 +18,7 @@ use ieee754::IEEE754Display;
 use leptos::prelude::*;
 use leptos::*;
 use special_values::SpecialValueGenerator;
+use std::cmp::PartialEq;
 
 #[derive(Debug, Clone, PartialOrd, PartialEq)]
 enum InputMode {
@@ -121,7 +121,10 @@ fn App() -> impl IntoView {
 
         if input_mode.get() == InputMode::Integer {
             // Целочисленный режим: только цифры
-            let filtered = input.chars().filter(|c| c.is_ascii_digit()).collect::<String>();
+            let filtered = input
+                .chars()
+                .filter(|c| c.is_ascii_digit())
+                .collect::<String>();
             set_dec_input.set(filtered.clone());
             if let Ok(num) = filtered.parse::<u64>() {
                 update_value(num);
@@ -136,13 +139,22 @@ fn App() -> impl IntoView {
                 match c {
                     '-' => {
                         // Разрешаем минус в начале или после экспоненты
-                        if i == 0 || (has_exponent && filtered_chars.last().map_or(false, |&lc| lc == 'e' || lc == 'E')) {
+                        if i == 0
+                            || (has_exponent
+                                && filtered_chars
+                                    .last()
+                                    .map_or(false, |&lc| lc == 'e' || lc == 'E'))
+                        {
                             filtered_chars.push(c);
                         }
                     }
                     '+' => {
                         // Разрешаем плюс только после экспоненты
-                        if has_exponent && filtered_chars.last().map_or(false, |&lc| lc == 'e' || lc == 'E') {
+                        if has_exponent
+                            && filtered_chars
+                                .last()
+                                .map_or(false, |&lc| lc == 'e' || lc == 'E')
+                        {
                             filtered_chars.push(c);
                         }
                     }
@@ -287,9 +299,6 @@ fn App() -> impl IntoView {
     let update_bit_size = move |new_size: u64| {
         set_bit_size.set(new_size);
     };
-
-
-
 
     view! {
         <div class="main-container">
