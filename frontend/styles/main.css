@@ -308,6 +308,39 @@ html, body {
     max-width: 100vw;
     margin-top: 10px;
 }
+.float-mode {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px;
+    color: var(--text-color);
+    font-family: monospace;
+    background: var(--bg-color);
+}
+
+.float-mode input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent-color);
+    background: var(--bg-color); /* Цвет неотмеченного чекбокса */
+    cursor: pointer;
+    position: relative;
+}
+
+.float-mode input[type="checkbox"]:checked {
+    border-color: var(--accent-color);
+}
+
+.float-mode input[type="checkbox"]:checked::after {
+    content: "✔";
+    color: var(--text-color);
+    font-size: 12px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .distribution-plot {
     position: relative;

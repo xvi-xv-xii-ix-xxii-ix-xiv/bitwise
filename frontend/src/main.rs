@@ -10,6 +10,7 @@ mod plot;
 mod special_values;
 // mod number_repr_bitops;
 
+use std::cmp::PartialEq;
 use crate::plot::DistributionPlot;
 use bit_grid::BitGrid;
 use bit_operations::BitArray;
@@ -19,6 +20,12 @@ use leptos::prelude::*;
 use leptos::*;
 use special_values::SpecialValueGenerator;
 
+#[derive(Debug, Clone, PartialOrd, PartialEq)]
+enum InputMode {
+    Integer,
+    Float,
+}
+
 /// Main application state and UI component
 #[component]
 fn App() -> impl IntoView {
@@ -27,6 +34,7 @@ fn App() -> impl IntoView {
     let (bit_size, set_bit_size): (ReadSignal<u64>, WriteSignal<u64>) = signal(64);
 
     // Signals for input fields
+    let (input_mode, set_input_mode) = signal(InputMode::Integer);
     let (dec_input, set_dec_input) = signal(String::new());
     let (bin_input, set_bin_input) = signal(String::new());
     let (hex_input, set_hex_input) = signal(String::new());
@@ -51,8 +59,19 @@ fn App() -> impl IntoView {
         let be_bytes = current.to_be_bytes();
         let byte_count = (bit_size.get() / 8) as usize;
 
+        if input_mode.get() == InputMode::Integer {
+            set_dec_input.set(current.to_string()); // Обычное целое число
+        } else {
+            let float_value = match bit_size.get() {
+                16 => half::f16::from_bits(current as u16).to_f64(),
+                32 => f32::from_bits((current & 0xFFFFFFFF) as u32) as f64,
+                64 => f64::from_bits(current),
+                _ => 0.0,
+            };
+            // set_dec_input.set(float_value.to_string());
+        }
+
         // Update numeric representations
-        set_dec_input.set(current.to_string());
         set_bin_input.set(format!(
             "0b{:0width$b}",
             current,
@@ -98,14 +117,76 @@ fn App() -> impl IntoView {
 
     // Input handlers with validation
     let input_dec = move |ev: web_sys::Event| {
-        let val = event_target_value(&ev)
-            .chars()
-            .filter(|c| c.is_ascii_digit())
-            .collect::<String>();
-        let filtered = if val.is_empty() { "0" } else { &val };
-        set_dec_input.set(filtered.parse().unwrap());
-        if let Ok(num) = filtered.parse() {
-            update_value(num);
+        let input = event_target_value(&ev);
+
+        if input_mode.get() == InputMode::Integer {
+            // Целочисленный режим: только цифры
+            let filtered = input.chars().filter(|c| c.is_ascii_digit()).collect::<String>();
+            set_dec_input.set(filtered.clone());
+            if let Ok(num) = filtered.parse::<u64>() {
+                update_value(num);
+            }
+        } else {
+            // Режим с плавающей точкой: разрешаем цифры, точку, экспоненту, знаки
+            let mut has_point = false;
+            let mut has_exponent = false;
+            let mut filtered_chars = Vec::new();
+
+            for (i, c) in input.chars().enumerate() {
+                match c {
+                    '-' => {
+                        // Разрешаем минус в начале или после экспоненты
+                        if i == 0 || (has_exponent && filtered_chars.last().map_or(false, |&lc| lc == 'e' || lc == 'E')) {
+                            filtered_chars.push(c);
+                        }
+                    }
+                    '+' => {
+                        // Разрешаем плюс только после экспоненты
+                        if has_exponent && filtered_chars.last().map_or(false, |&lc| lc == 'e' || lc == 'E') {
+                            filtered_chars.push(c);
+                        }
+                    }
+                    '.' => {
+                        // Точка разрешена до экспоненты и только одна
+                        if !has_point && !has_exponent {
+                            has_point = true;
+                            filtered_chars.push(c);
+                        }
+                    }
+                    'e' | 'E' => {
+                        // Экспонента разрешена один раз, если есть цифры до
+                        if !has_exponent && !filtered_chars.is_empty() {
+                            has_exponent = true;
+                            filtered_chars.push(c);
+                        }
+                    }
+                    c if c.is_ascii_digit() => filtered_chars.push(c),
+                    _ => (),
+                }
+            }
+
+            let filtered = filtered_chars.into_iter().collect::<String>();
+            set_dec_input.set(filtered.clone());
+
+            // Автодополнение ведущего нуля для точек
+            let filtered = if filtered.starts_with('.') {
+                format!("0{}", filtered)
+            } else if filtered.is_empty() {
+                "0".to_string()
+            } else {
+                filtered
+            };
+
+            // Парсим и обновляем биты
+            if let Ok(num) = filtered.parse::<f64>() {
+                let bits = match bit_size.get() {
+                    16 => u64::from(half::f16::from_f64(num).to_bits() as u16),
+                    32 => u64::from((num as f32).to_bits() as u32),
+                    64 => num.to_bits(),
+                    _ => 0,
+                };
+                set_bit_array.set(BitArray(bits));
+            }
         }
     };
 
@@ -207,6 +288,9 @@ fn App() -> impl IntoView {
         set_bit_size.set(new_size);
     };
 
+
+
+
     view! {
         <div class="main-container">
             <div class="bit-size-selector">
@@ -223,6 +307,21 @@ fn App() -> impl IntoView {
                         {size.to_string()}
                     </label>
                 }).collect_view()}
+                    <label class="float-mode">
+                <input
+                    type="checkbox"
+                    checked=move || matches!(input_mode.get(), InputMode::Float)
+                    on:change=move |ev| {
+                        let checked = event_target_checked(&ev);
+                        set_input_mode.set(if checked {
+                            InputMode::Float
+                        } else {
+                            InputMode::Integer
+                        });
+                    }
+                />
+                "Float"
+            </label>
             </div>
 
             <div class="decoder-generator-container">
