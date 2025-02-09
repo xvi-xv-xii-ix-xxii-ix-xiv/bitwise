@@ -21,8 +21,11 @@ use special_values::SpecialValueGenerator;
 use std::cmp::PartialEq;
 
 #[derive(Debug, Clone, PartialOrd, PartialEq)]
+/// Represents the input interpretation mode
 enum InputMode {
+    /// Integer number interpretation
     Integer,
+    /// Floating-point number interpretation
     Float,
 }
 
@@ -60,9 +63,9 @@ fn App() -> impl IntoView {
         let byte_count = (bit_size.get() / 8) as usize;
 
         if input_mode.get() == InputMode::Integer {
-            set_dec_input.set(current.to_string()); // Обычное целое число
+            set_dec_input.set(current.to_string()); // Regular integer
         } else {
-            let float_value = match bit_size.get() {
+            let _float_value = match bit_size.get() {
                 16 => half::f16::from_bits(current as u16).to_f64(),
                 32 => f32::from_bits((current & 0xFFFFFFFF) as u32) as f64,
                 64 => f64::from_bits(current),
@@ -120,7 +123,7 @@ fn App() -> impl IntoView {
         let input = event_target_value(&ev);
 
         if input_mode.get() == InputMode::Integer {
-            // Целочисленный режим: только цифры
+            // Integer mode: only allow digits
             let filtered = input
                 .chars()
                 .filter(|c| c.is_ascii_digit())
@@ -130,7 +133,7 @@ fn App() -> impl IntoView {
                 update_value(num);
             }
         } else {
-            // Режим с плавающей точкой: разрешаем цифры, точку, экспоненту, знаки
+            // Float mode: allow digits, decimal point, exponents, and signs
             let mut has_point = false;
             let mut has_exponent = false;
             let mut filtered_chars = Vec::new();
@@ -138,7 +141,7 @@ fn App() -> impl IntoView {
             for (i, c) in input.chars().enumerate() {
                 match c {
                     '-' => {
-                        // Разрешаем минус в начале или после экспоненты
+                        // Allow minus at start or after exponent
                         if i == 0
                             || (has_exponent
                                 && filtered_chars
@@ -149,7 +152,7 @@ fn App() -> impl IntoView {
                         }
                     }
                     '+' => {
-                        // Разрешаем плюс только после экспоненты
+                        // Allow plus only after exponent
                         if has_exponent
                             && filtered_chars
                                 .last()
@@ -159,14 +162,14 @@ fn App() -> impl IntoView {
                         }
                     }
                     '.' => {
-                        // Точка разрешена до экспоненты и только одна
+                        // Allow single decimal point before exponent
                         if !has_point && !has_exponent {
                             has_point = true;
                             filtered_chars.push(c);
                         }
                     }
                     'e' | 'E' => {
-                        // Экспонента разрешена один раз, если есть цифры до
+                        // Allow single exponent after digits
                         if !has_exponent && !filtered_chars.is_empty() {
                             has_exponent = true;
                             filtered_chars.push(c);
@@ -180,7 +183,7 @@ fn App() -> impl IntoView {
             let filtered = filtered_chars.into_iter().collect::<String>();
             set_dec_input.set(filtered.clone());
 
-            // Автодополнение ведущего нуля для точек
+            // Add leading zero for decimal fractions
             let filtered = if filtered.starts_with('.') {
                 format!("0{}", filtered)
             } else if filtered.is_empty() {
@@ -189,7 +192,7 @@ fn App() -> impl IntoView {
                 filtered
             };
 
-            // Парсим и обновляем биты
+            // Parse and update bits
             if let Ok(num) = filtered.parse::<f64>() {
                 let bits = match bit_size.get() {
                     16 => u64::from(half::f16::from_f64(num).to_bits() as u16),
@@ -238,6 +241,7 @@ fn App() -> impl IntoView {
         set_hex_be_input.set(format!("0x{}", val));
         if val.len() == expected_len {
             if let Ok(bytes) = hex::decode(&val) {
+                // Convert big-endian bytes to value
                 let value = bytes.iter().enumerate().fold(0u64, |acc, (i, &b)| {
                     acc | (b as u64) << ((bytes.len() - 1 - i) * 8)
                 });
@@ -257,6 +261,7 @@ fn App() -> impl IntoView {
         set_hex_le_input.set(format!("0x{}", val));
         if val.len() == expected_len {
             if let Ok(bytes) = hex::decode(&val) {
+                // Convert little-endian bytes to value
                 let value = bytes
                     .iter()
                     .enumerate()
